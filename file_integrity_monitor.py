@@ -21,28 +21,4 @@ def hash_file(filename):
     
     return sha256_hash.hexdigest()
 
-def monitor_files(file_list, interval):
-    """
-    Monitors the specified files for changes by comparing their hashes.
-    
-    :param file_list: A list of files to monitor.
-    :param interval: Time interval (in seconds) between file checks.
-    """
-    file_hashes = {file: hash_file(file) for file in file_list}
 
-    while True:
-        time.sleep(interval)
-        for file in file_list:
-            new_hash = hash_file(file)
-            if new_hash is None:
-                continue
-            if file_hashes[file] != new_hash:
-                print(f"Warning: File '{file}' has been modified!")
-                file_hashes[file] = new_hash
-
-if __name__ == "__main__":
-    files_to_monitor = input("Enter the file paths to monitor (comma-separated): ").split(",")
-    interval = int(input("Enter the monitoring interval (in seconds): "))
-    
-    monitor_files([file.strip() for file in files_to_monitor], interval)
-  
